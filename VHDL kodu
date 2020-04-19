@@ -1,0 +1,24 @@
+library IEEE;
+Use IEEE.std_logic_1164.all;
+
+Entity Parity is
+port( dizi: in std_logic_vector(14 downto 0));
+End Parity;
+
+
+Architecture Behv of Parity is
+  signal paritv: std_logic_vector(15 downto 0);
+  signal pbit: std_logic;
+  function ciftparity(girisdizisi:std_logic_vector(14 downto 0))return std_logic is
+      variable paritybit: std_logic:='0';
+    begin
+      for I in 0 to 14 loop 
+       paritybit := paritybit xor girisdizisi(I);
+      end loop;
+    return paritybit;
+    end ciftparity;
+    
+    begin
+      paritv <= dizi(14 downto 0)&ciftparity(dizi);
+      pbit <= ciftparity(dizi);
+end Behv;
