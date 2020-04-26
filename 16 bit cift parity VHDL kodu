@@ -3,24 +3,23 @@
 library IEEE;
 Use IEEE.std_logic_1164.all;
 
-Entity Parity is                               --Parity adında bir devre elemanı oluşturuyoruz
-port( dizi: in std_logic_vector(14 downto 0)); --portları tanımlıyoruz. 15 bitlik bit giriş dizisi tanımladık
+Entity Parity is                               
+port( dizi: in std_logic_vector(15 downto 0)); 
 End Parity;
 
 
-Architecture Behv of Parity is                 --yukarıda tanımı yapılan devre elemanının mimarisi yapılır
-  signal paritv: std_logic_vector(15 downto 0);  --parity bitli bit dizisi için bir dizi oluşturduk
-  signal pbit: std_logic;                         --parity biti görebilmek için bir sinyal oluşturduk
-  function ciftparity(girisdizisi:std_logic_vector(14 downto 0))return std_logic is  --parity bit hesaplayan fonksiyon tanımladık
-      variable paritybit: std_logic:='0';         --döngü işlemi için bir ara değer oluşturduk
+Architecture Behv of Parity is               
+  signal paritv: std_logic_vector(16 downto 0); 
+  signal pbit: std_logic;                         
+  function ciftparity(girisdizisi:std_logic_vector(15 downto 0))return std_logic is 
+      variable paritybit: std_logic:='0';       
     begin
-      for I in 0 to 14 loop                        
-       paritybit := paritybit xor girisdizisi(I);   --giriş portunda girilen bitleri kendi aralarında xor ladık sonucunda çift parity biti elde ettik
-      end loop;
-    return paritybit;  -- paritybit bizim çift parity bitimiz oldu
-    end ciftparity; -- fonksiyonun sonu 
+      for I in 0 to 15 loop                        
+       paritybit := paritybit xor girisdizisi(I);        end loop;
+    return paritybit;  
+    end ciftparity; 
     
     begin
-      paritv <= dizi(14 downto 0)&ciftparity(dizi);    --giriş bit dizimize elde ettiğimiz parity biti ekleyip , 16 bitlik yeni bir diziye atadık
-      pbit <= ciftparity(dizi); -- sinyal olarak görebilmek adına fonksiyonun döndürdüğü parity biti pbit sinyaline atadık.
+      paritv <= dizi(15 downto 0)&ciftparity(dizi);    
+      pbit <= ciftparity(dizi); 
 end Behv;
